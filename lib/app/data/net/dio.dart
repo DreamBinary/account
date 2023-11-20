@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:path_provider/path_provider.dart';
+
 class DioUtil {
   static DioUtil? _instance;
   late Dio _dio;
@@ -69,7 +70,6 @@ class DioUtil {
         return handler.next(e);
       },
     ));
-
   } //private constructor
   // Future<void> prepareJar() async {
   //   final Directory appDocDir = await getApplicationDocumentsDirectory();
@@ -106,11 +106,11 @@ class DioUtil {
     return null;
   }
 
-  Future<Response?> postForm(String url, Map<String, dynamic> map,Options? options) async {
+  Future<Response?> postForm(
+      String url, Map<String, dynamic> map, Options? options) async {
     try {
       FormData formData = FormData.fromMap(map);
-      return await _dio.post(url,
-          data: formData, options: options);
+      return await _dio.post(url, data: formData, options: options);
     } on DioError catch (e) {
       formatError(e);
     }

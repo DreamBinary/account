@@ -20,8 +20,6 @@ class Url {
   // guardian
   static String code = "/api/guardianship/code";
 
-
-
   // consumption
   static String addRecord = "/api/consumption";
 
