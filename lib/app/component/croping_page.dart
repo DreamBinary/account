@@ -3,12 +3,9 @@ import 'package:account/app/routes/app_pages.dart';
 import 'package:account/app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../data/entity/consume.dart';
 import '../data/net/api_img.dart';
-import '../theme/app_colors.dart';
 import '../theme/app_string.dart';
 import '../utils/mmkv.dart';
 import 'cropImg.dart';

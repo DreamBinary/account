@@ -1,5 +1,3 @@
-import 'package:account/app/component/my_header/header_logic.dart';
-import 'package:account/app/component/mytopbar.dart';
 import 'package:account/app/routes/app_pages.dart';
 import 'package:account/app/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +10,6 @@ import '../../../component/version_ctrl.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_text_theme.dart';
 import '../report_view.dart';
-import 'more_logic.dart';
 
 class MorePage extends StatelessWidget {
   const MorePage({super.key});

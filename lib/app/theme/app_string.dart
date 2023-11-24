@@ -1,9 +1,11 @@
-import 'package:account/app/component/version_ctrl.dart';
+
 
 class AppString {
   // mmkv
   static const String mmVersion = "mmVersion";
   static const String mmIsLogin = "mmIsLogin";
+  static const String mmUsername = "mmUsername";
+  static const String mmUserData = "mmUserData";
   static const String mmIsIntro = "mmIsIntro";
   static const String mmToken = "mmToken";
   static const String mmColor = "mmColor";
@@ -22,5 +24,8 @@ class AppString {
 
   static const String useClause = "使用条款";
   static const String privacy = "隐私政策";
+
+  static const String camera = "相机";
+  static const String gallery = "相册";
 
 }

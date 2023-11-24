@@ -1,10 +1,11 @@
 import 'dart:async';
+import 'dart:typed_data';
+
 import 'package:account/app/data/entity/consume.dart';
 import 'package:account/app/data/net/url.dart';
 import 'package:dio/dio.dart';
-
 import 'package:flutter/services.dart';
-import 'dart:typed_data';
+
 import '../../theme/app_string.dart';
 import '../../utils/mmkv.dart';
 import 'dio.dart';
