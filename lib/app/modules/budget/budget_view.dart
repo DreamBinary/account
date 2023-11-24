@@ -12,6 +12,8 @@ import 'package:get/get.dart';
 import 'budget_logic.dart';
 
 class BudgetPage extends StatelessWidget {
+  const BudgetPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final logic = Get.find<BudgetLogic>();

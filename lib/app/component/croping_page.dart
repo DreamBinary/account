@@ -15,9 +15,11 @@ class CroppingPage extends StatelessWidget {
   final String fileName;
   final bool isScreenShot;
 
-  const CroppingPage(
-      {required this.fileName, this.isScreenShot = false, Key? key})
-      : super(key: key);
+  const CroppingPage({
+    required this.fileName,
+    this.isScreenShot = false,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

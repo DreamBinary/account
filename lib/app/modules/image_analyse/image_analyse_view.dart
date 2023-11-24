@@ -22,6 +22,8 @@ import '../../utils/date_util.dart';
 import 'image_analyse_logic.dart';
 
 class ImageAnalysePage extends StatefulWidget {
+  const ImageAnalysePage({super.key});
+
   @override
   State<ImageAnalysePage> createState() => _ImageAnalysePageState();
 }

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:account/app/utils/camera_util.dart';
 import 'package:account/res/assets_res.dart';
 import 'package:badges/badges.dart' as bdg;
 import 'package:flutter/cupertino.dart';
@@ -111,32 +112,34 @@ class _HeaderComponentState extends State<HeaderComponent> {
 
   void _getGallery() {
     Get.back();
-    logic.getGallery().then((value) => {
-          if (value != null)
-            {
-              setState(
-                () {
-                  _child = value;
-                },
-              )
-            }
-        });
+    CameraUtil.getGallery().then(
+      (value) => {
+        if (value != null)
+          {
+            setState(
+              () {
+                _child = value;
+              },
+            )
+          }
+      },
+    );
   }
 
   void _getCamera() {
     Get.back();
-    logic.getCamera().then(
-          (value) => {
-            if (value != null)
-              {
-                setState(
-                  () {
-                    _child = value;
-                  },
-                )
-              }
-          },
-        );
+    CameraUtil.getCamera().then(
+      (value) => {
+        if (value != null)
+          {
+            setState(
+              () {
+                _child = value;
+              },
+            )
+          }
+      },
+    );
   }
 
   Widget _sheetItem({required VoidCallback onPressed, required String text}) {
