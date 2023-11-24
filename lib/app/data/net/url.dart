@@ -44,7 +44,6 @@ class Url {
   static String allRecord = "/api/consumption";
 
   static String recordMap = "/api/consumption/month/map";
-
   static String rangeRecordMap = "/api/consumption/range/map";
   static String rangeOut = "/api/consumption/range/out";
   static String rangeIn = "/api/consumption/range/in";

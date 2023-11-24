@@ -18,10 +18,6 @@ import 'app/routes/app_pages.dart';
 import 'app/theme/app_colors.dart';
 import 'app/component/floating_head.dart';
 
-// login() {
-//   ApiUser.login("admin", "123456");
-// }
-
 void main() async {
   final rootDir = await MMKV.initialize();
   // splash
@@ -30,7 +26,6 @@ void main() async {
   StatusBarControl.setTranslucent(true);
 
   runApp(const MyApp());
-  // login();
 }
 
 @pragma("vm:entry-point")
@@ -53,7 +48,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   int version = MMKVUtil.getInt(AppString.mmVersion);
-
   bool isLogin = MMKVUtil.getBool(AppString.mmIsLogin);
   bool isIntro = MMKVUtil.getBool(AppString.mmIsIntro);
 
