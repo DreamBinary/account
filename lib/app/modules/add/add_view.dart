@@ -5,19 +5,13 @@ import 'package:account/app/theme/app_colors.dart';
 import 'package:account/app/theme/app_text_theme.dart';
 import 'package:account/app/utils/toast.dart';
 import 'package:account/res/assets_res.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 
 import '../../component/mydatepicker.dart';
 import '../../component/myshowbottomsheet.dart';
-import '../../component/picchoicebtn.dart';
 import '../../component/select_chips.dart';
-import '../../theme/app_string.dart';
-import '../../utils/camera_util.dart';
-import '../../utils/mmkv.dart';
 import 'add_logic.dart';
 
 class AddPage extends StatefulWidget {

@@ -4,8 +4,7 @@ import 'package:flutter/cupertino.dart';
 class DioUtil {
   static DioUtil? _instance;
   late Dio _dio;
-  static const String _BASEURL =
-      "http://43.136.122.18:8087"; //"http://10.0.2.2:8087"; //
+  static const String _BASEURL = "http://10.0.2.2:8087";
   static const Duration _CONNECTTIMEOUT = Duration(seconds: 5);
   static const Duration _RECEIVETIMEOUT = Duration(seconds: 10);
 
@@ -13,7 +12,6 @@ class DioUtil {
     if (_instance == null) {
       _instance = DioUtil._internal();
       return _instance!;
-
     } else {
       return _instance!;
     }

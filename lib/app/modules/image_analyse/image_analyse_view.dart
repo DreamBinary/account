@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:account/app/component/bar_chart.dart';
 import 'package:account/app/component/lines_text.dart';
 import 'package:account/app/component/mytopbar.dart';
 import 'package:account/app/utils/extension.dart';

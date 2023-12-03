@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../component/multi_column_row.dart';
 import '../../../component/myiconbtn.dart';
 import '../../../component/myshowbottomsheet.dart';
 import '../../../component/swipe_book.dart';

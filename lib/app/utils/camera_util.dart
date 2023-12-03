@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:account/app/data/net/api_img.dart';
 import 'package:account/app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
