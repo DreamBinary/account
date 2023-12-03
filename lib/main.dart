@@ -1,4 +1,5 @@
 import 'package:account/app/component/version_ctrl.dart';
+import 'package:account/app/data/net/api_consume.dart';
 import 'package:account/app/modules/all_entry/login/login_binding.dart';
 import 'package:account/app/theme/app_string.dart';
 import 'package:account/app/theme/app_text_theme.dart';
@@ -58,9 +59,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // ApiMoney.getAbleMon();
-    // ApiMoney.getExchange();
-
     Statusbarz.instance.setDefaultDelay = const Duration();
     return ScreenUtilInit(
       designSize: const Size(375, 812),
@@ -76,7 +74,7 @@ class _MyAppState extends State<MyApp> {
                 AppTS.changeVersion(v);
                 AppColors.changeVersion(v);
                 setState(
-                  () {
+                      () {
                     version = v;
                   },
                 );
@@ -87,8 +85,8 @@ class _MyAppState extends State<MyApp> {
                   primaryColor: AppColors.primary,
                   fontFamily: "FZQKBYSJW",
                   colorScheme:
-                      ColorScheme.fromSwatch(primarySwatch: Colors.grey)
-                          .copyWith(background: AppColors.whiteBg),
+                  ColorScheme.fromSwatch(primarySwatch: Colors.grey)
+                      .copyWith(background: AppColors.whiteBg),
                 ),
                 navigatorObservers: [Statusbarz.instance.observer],
                 getPages: AppPages.pages,

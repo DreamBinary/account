@@ -1,4 +1,4 @@
-import 'package:account/app/utils/date_util.dart';
+import 'dart:math';
 
 import '../../../res/assets_res.dart';
 
@@ -41,46 +41,55 @@ class ConsumeData {
     AssetsRes.CLASS_OTHER,
   ];
 
-  ConsumeData(
-      {required this.consumptionName,
-      required this.description,
-      required this.amount,
-      required this.typeId,
-      required this.store,
-      required this.consumeTime,
-      required this.consumeDate,
-      required this.credential,
-      this.imgUrl});
+  ConsumeData({
+    this.consumptionId = 0,
+    required this.consumptionName,
+    required this.description,
+    required this.amount,
+    required this.typeId,
+    required this.store,
+    required this.consumeTime,
+    required this.consumeDate,
+    required this.credential,
+  });
 
-  ConsumeData.fromJson(dynamic json) {
-    credential = json['credential'] ?? "";
-    imgUrl = credential.startsWith("http")
-        ? credential
-        : (credential == "default"
-            ? null
-            : "http://luke.host/images/$credential");
-    consumptionName = json['consumptionName'] ?? "";
-    description = json['description'] ?? "";
-    amount = json['amount'] ?? 0.0;
-    typeId = json['typeId'] == null || json["typeId"] - 1 < 0
-        ? 15
-        : json['typeId'] - 1;
-    store = json['store'];
-    List<String> str = (json['consumeTime'] ?? DateUtil.getNowFormattedDate())
-        .toString()
-        .split(" ");
-    consumeTime = str.length > 1 ? str[1] : "00:00:00";
-    consumeDate = str[0];
-  }
+  factory ConsumeData.fromJson(dynamic json) => ConsumeData(
+        consumptionId: json['consumptionId'],
+        consumptionName: json['consumptionName'],
+        description: json['description'],
+        amount: json['amount'],
+        typeId: min(max(json['typeId'] - 1, 0), 15),
+        store: json['store'],
+        consumeTime: json['consumeTime'].split(" ")[1],
+        consumeDate: json['consumeTime'].split(" ")[0],
+        credential: json['credential'],
+      );
 
-  late String consumptionName;
-  late String description;
-  late double amount;
-  late int typeId;
-  late String store;
-  late String consumeTime;
-  late String consumeDate;
-  late String credential;
+  // {
+  //   credential = json['credential'] ?? "";
+  //   consumptionName = json['consumptionName'] ?? "";
+  //   description = json['description'] ?? "";
+  //   amount = json['amount'] ?? 0.0;
+  //   typeId = json['typeId'] == null || json["typeId"] - 1 < 0
+  //       ? 15
+  //       : json['typeId'] - 1;
+  //   store = json['store'];
+  //   List<String> str = (json['consumeTime'] ?? DateUtil.getNowFormattedDate())
+  //       .toString()
+  //       .split(" ");
+  //   consumeTime = str.length > 1 ? str[1] : "00:00:00";
+  //   consumeDate = str[0];
+  // }
+
+  num consumptionId;
+  String consumptionName;
+  String description;
+  num amount;
+  int typeId;
+  String store;
+  String consumeTime;
+  String consumeDate;
+  String credential;
   String? imgUrl;
 
   @override

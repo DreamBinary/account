@@ -203,7 +203,8 @@ class DataSource extends DataGridSource {
           (e) => DataGridRow(
             cells: [
               DataGridCell<String>(columnName: "时间", value: e.consumeDate),
-              DataGridCell<double>(columnName: "金额", value: e.amount),
+              DataGridCell<double>(
+                  columnName: "金额", value: e.amount.toDouble()),
               DataGridCell<String>(columnName: "物品", value: e.consumptionName),
               DataGridCell<String>(columnName: "地点", value: e.store),
             ],

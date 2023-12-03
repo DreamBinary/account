@@ -26,7 +26,9 @@ class ReportPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // return const _SMorePage();
 
-    return VersionCtrl.of(context)?.version != 0
+    return VersionCtrl
+        .of(context)
+        ?.version != 0
         ? const _SReportPage()
         : const _MReportPage();
   }
@@ -98,7 +100,7 @@ class _MReportPage extends StatelessWidget {
                               builder: (_, snapshot) {
                                 if (snapshot.hasData) {
                                   List<double> data =
-                                      snapshot.data as List<double>;
+                                  snapshot.data as List<double>;
                                   return MultiColumnRow(
                                     titles: const [
                                       "总收入",
@@ -110,7 +112,8 @@ class _MReportPage extends StatelessWidget {
                                       data[0].moneyFormat,
                                       (max(data[1] - data[0], 0.0)).moneyFormat,
                                     ],
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment
+                                        .center,
                                     numTextStyle: AppTS.normal,
                                     decTextStyle: AppTS.big,
                                   );
@@ -128,7 +131,7 @@ class _MReportPage extends StatelessWidget {
                                         "0000",
                                       ],
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      CrossAxisAlignment.center,
                                       numTextStyle: AppTS.normal,
                                       decTextStyle: AppTS.big,
                                     ),
@@ -227,14 +230,14 @@ class _MReportPage extends StatelessWidget {
   Future<double> _getOut() async {
     String date = DateUtil.getNowFormattedDate();
     return (await ApiConsume.getOut(type: "month", date: "$date 00:00:00"))
-            ?.abs() ??
+        ?.abs() ??
         0.0;
   }
 
   Future<double> _getIn() async {
     String date = DateUtil.getNowFormattedDate();
     return (await ApiConsume.getIn(type: "month", date: "$date 00:00:00"))
-            ?.abs() ??
+        ?.abs() ??
         0.0;
   }
 

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:account/app/utils/camera_util.dart';
 import 'package:account/res/assets_res.dart';
-import 'package:badges/badges.dart' as bdg;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,33 +47,50 @@ class _HeaderComponentState extends State<HeaderComponent> {
           () {
             Get.to(ImagePreview(_child.image));
           },
-      child: bdg.Badge(
-        badgeContent: GestureDetector(
-          onTap: _showChoice,
-          child: const Icon(Icons.add),
-        ),
-        badgeColor: AppColors.grey,
-        alignment: Alignment.topRight,
-        elevation: 10,
-        showBadge: widget.showAdd,
-        child: Hero(
-          tag: "header",
-          child: Container(
-            height: widget.radius * 2,
-            width: widget.radius * 2,
-            clipBehavior: Clip.antiAlias,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.white,
-            ),
-            foregroundDecoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: AppColors.primary, width: 2),
-            ),
-            child: _child,
+      child: Hero(
+        tag: "header",
+        child: Container(
+          height: widget.radius * 2,
+          width: widget.radius * 2,
+          clipBehavior: Clip.antiAlias,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.white,
           ),
+          foregroundDecoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(color: AppColors.primary, width: 2),
+          ),
+          child: _child,
         ),
       ),
+      // child: bdg.Badge(
+      //   badgeContent: GestureDetector(
+      //     onTap: _showChoice,
+      //     child: const Icon(Icons.add),
+      //   ),
+      //   // badgeColor: AppColors.grey,
+      //   alignment: Alignment.topRight,
+      //   elevation: 10,
+      //   showBadge: widget.showAdd,
+      //   child: Hero(
+      //     tag: "header",
+      //     child: Container(
+      //       height: widget.radius * 2,
+      //       width: widget.radius * 2,
+      //       clipBehavior: Clip.antiAlias,
+      //       decoration: const BoxDecoration(
+      //         shape: BoxShape.circle,
+      //         color: Colors.white,
+      //       ),
+      //       foregroundDecoration: BoxDecoration(
+      //         shape: BoxShape.circle,
+      //         border: Border.all(color: AppColors.primary, width: 2),
+      //       ),
+      //       child: _child,
+      //     ),
+      //   ),
+      // ),
     );
   }
 

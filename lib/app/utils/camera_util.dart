@@ -31,13 +31,13 @@ class CameraUtil {
     }
   }
 
-  static Future<List<String>> upImg(XFile xFile) async {
-    String path = xFile.path;
-    File file = File(path);
-    List<String> urls = await ApiImg.upImg(imgPaths: [file.path]);
-    file.deleteSync(recursive: true);
-    return urls;
-  }
+  // static Future<List<String>> upImg(XFile xFile) async {
+  //   String path = xFile.path;
+  //   File file = File(path);
+  //   List<String> urls = await ApiImg.upImg(imgPaths: [file.path]);
+  //   file.deleteSync(recursive: true);
+  //   return urls;
+  // }
 
   static Future<Image> crop(XFile xFile) async {
     Uint8List initBytes = await xFile.readAsBytes();
@@ -50,7 +50,9 @@ class CameraUtil {
   static Future<String> getPath(Uint8List bytes) async {
     var tempDir = await getTemporaryDirectory();
     var file = await File(
-            '${tempDir.path}/image_${DateTime.now().millisecondsSinceEpoch}.png')
+        '${tempDir.path}/image_${DateTime
+            .now()
+            .millisecondsSinceEpoch}.png')
         .create();
     file.writeAsBytesSync(bytes);
     return file.path;

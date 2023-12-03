@@ -38,85 +38,86 @@ class _IntroPageState extends State<IntroPage> {
         controller: controller,
         children: List.generate(
           4,
-          (index) => Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(paths[index]),
-                fit: BoxFit.fill,
-              ),
-            ),
-            child: Stack(
-              children: [
-                if (index == 3)
-                  Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _ModeCard(
-                          isBig: _modeIndex == -1 || _modeIndex == 0,
-                          hasBorder: _modeIndex == 0,
-                          shadowColor: const Color(0xffECD2A8),
-                          borderColor: const Color(0xffFFCC7C),
-                          pathSelect: AssetsRes.MODE0,
-                          pathUnSelect: AssetsRes.MODE00,
-                          onTap: () {
-                            setState(() {
-                              _modeIndex = 0;
-                            });
-                          },
-                        ),
-                        if (_modeIndex == 0)
-                          const _ModeIntro(
-                            titles: [
-                              "· 功能完整",
-                              "· 界面美观，布局新颖",
-                              "· 适合青年人使用",
-                            ],
-                          ),
-                        if (_modeIndex == 1)
-                          const _ModeIntro(
-                            titles: [
-                              "· 仅保留核心功能",
-                              "· 图标显眼，文字清晰",
-                              "· 适合中老年人使用",
-                            ],
-                          ),
+              (index) =>
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(paths[index]),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    if (index == 3)
+                      Center(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _ModeCard(
+                              isBig: _modeIndex == -1 || _modeIndex == 0,
+                              hasBorder: _modeIndex == 0,
+                              shadowColor: const Color(0xffECD2A8),
+                              borderColor: const Color(0xffFFCC7C),
+                              pathSelect: AssetsRes.MODE0,
+                              pathUnSelect: AssetsRes.MODE00,
+                              onTap: () {
+                                setState(() {
+                                  _modeIndex = 0;
+                                });
+                              },
+                            ),
+                            if (_modeIndex == 0)
+                              const _ModeIntro(
+                                titles: [
+                                  "· 功能完整",
+                                  "· 界面美观，布局新颖",
+                                  "· 适合青年人使用",
+                                ],
+                              ),
+                            if (_modeIndex == 1)
+                              const _ModeIntro(
+                                titles: [
+                                  "· 仅保留核心功能",
+                                  "· 图标显眼，文字清晰",
+                                  "· 适合中老年人使用",
+                                ],
+                              ),
 
-                        _ModeCard(
-                          isBig: _modeIndex == -1 || _modeIndex == 1,
-                          hasBorder: _modeIndex == 1,
-                          shadowColor: const Color(0xffCACFAD),
-                          borderColor: const Color(0xffB9CB70),
-                          pathSelect: AssetsRes.MODE1,
-                          pathUnSelect: AssetsRes.MODE11,
-                          onTap: () {
-                            setState(() {
-                              _modeIndex = 1;
-                            });
-                          },
+                            _ModeCard(
+                              isBig: _modeIndex == -1 || _modeIndex == 1,
+                              hasBorder: _modeIndex == 1,
+                              shadowColor: const Color(0xffCACFAD),
+                              borderColor: const Color(0xffB9CB70),
+                              pathSelect: AssetsRes.MODE1,
+                              pathUnSelect: AssetsRes.MODE11,
+                              onTap: () {
+                                setState(() {
+                                  _modeIndex = 1;
+                                });
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: _IndicatorPart(
-                    controller: controller,
-                    index: index,
-                    onEnd: () {
-                      if (_modeIndex == -1) {
-                        _modeIndex = 0;
-                      }
-                      MMKVUtil.put(AppString.mmIsIntro, true);
-                      VersionCtrl.of(context)?.changeVersion(_modeIndex);
-                      Get.offAllNamed(Routes.login);
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
+                      ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: _IndicatorPart(
+                        controller: controller,
+                        index: index,
+                        onEnd: () {
+                          if (_modeIndex == -1) {
+                            _modeIndex = 0;
+                          }
+                          MMKVUtil.put(AppString.mmIsIntro, true);
+                          VersionCtrl.of(context)?.changeVersion(_modeIndex);
+                          Get.offAllNamed(Routes.login);
+                        },
+                      ),
+                    )
+                  ],
+                ),
+              ),
         ),
       ),
     );
@@ -144,15 +145,14 @@ class _ModeCard extends StatelessWidget {
   final String pathUnSelect;
   final GestureTapCallback? onTap;
 
-  const _ModeCard(
-      {required this.isBig,
-      required this.hasBorder,
-      required this.shadowColor,
-      required this.borderColor,
-      required this.pathSelect,
-      required this.pathUnSelect,
-      this.onTap,
-      Key? key})
+  const _ModeCard({required this.isBig,
+    required this.hasBorder,
+    required this.shadowColor,
+    required this.borderColor,
+    required this.pathSelect,
+    required this.pathUnSelect,
+    this.onTap,
+    Key? key})
       : super(key: key);
 
   @override
@@ -167,42 +167,42 @@ class _ModeCard extends StatelessWidget {
           shape: RoundedRectangleBorder(
               side: hasBorder
                   ? BorderSide(
-                      color: borderColor,
-                      width: 6,
-                      strokeAlign: BorderSide.strokeAlignOutside,
-                    )
+                color: borderColor,
+                width: 6,
+                strokeAlign: BorderSide.strokeAlignOutside,
+              )
                   : BorderSide.none,
               borderRadius: BorderRadius.circular(20)),
           child: isBig
               ? Container(
-                  height: 200.h,
-                  width: 280.w,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: DecorationImage(
-                        image: AssetImage(pathSelect),
-                        fit: BoxFit.fill,
-                      ),
-                      boxShadow:  [
-                        BoxShadow(
-                          color: shadowColor,
-                          offset: const Offset(2, 2),
-                          blurRadius: 12,
-                          spreadRadius: 3,
-                        ),
-                      ]),
-                )
-              : Container(
-                  height: 100.h,
-                  width: 280.w,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(pathUnSelect),
-                      fit: BoxFit.fill,
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
+            height: 200.h,
+            width: 280.w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: AssetImage(pathSelect),
+                  fit: BoxFit.fill,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: shadowColor,
+                    offset: const Offset(2, 2),
+                    blurRadius: 12,
+                    spreadRadius: 3,
+                  ),
+                ]),
+          )
+              : Container(
+            height: 100.h,
+            width: 280.w,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(pathUnSelect),
+                fit: BoxFit.fill,
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
         ),
       ),
     );
@@ -247,11 +247,10 @@ class _IndicatorPart extends StatelessWidget {
   final int index;
   final VoidCallback onEnd;
 
-  const _IndicatorPart(
-      {required this.controller,
-      required this.index,
-      required this.onEnd,
-      Key? key})
+  const _IndicatorPart({required this.controller,
+    required this.index,
+    required this.onEnd,
+    Key? key})
       : super(key: key);
 
   @override

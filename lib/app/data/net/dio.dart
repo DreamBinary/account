@@ -4,7 +4,8 @@ import 'package:flutter/cupertino.dart';
 class DioUtil {
   static DioUtil? _instance;
   late Dio _dio;
-  static const String _BASEURL = "http://luke.host";
+  static const String _BASEURL =
+      "http://43.136.122.18:8087"; //"http://10.0.2.2:8087"; //
   static const Duration _CONNECTTIMEOUT = Duration(seconds: 5);
   static const Duration _RECEIVETIMEOUT = Duration(seconds: 10);
 
@@ -12,6 +13,7 @@ class DioUtil {
     if (_instance == null) {
       _instance = DioUtil._internal();
       return _instance!;
+
     } else {
       return _instance!;
     }
@@ -102,10 +104,12 @@ class DioUtil {
   }
 
   Future<Response?> postForm(
-      String url, Map<String, dynamic> map, Options? options) async {
+      String url, Map<String, dynamic> map, Options? options,
+      {Map<String, dynamic>? query}) async {
     try {
       FormData formData = FormData.fromMap(map);
-      return await _dio.post(url, data: formData, options: options);
+      return await _dio.post(url,
+          data: formData, queryParameters: query, options: options);
     } on DioError catch (e) {
       formatError(e);
     }

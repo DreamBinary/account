@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 
 import '../../../data/net/api_user.dart';
@@ -10,7 +9,9 @@ import 'register_state.dart';
 
 class RegisterLogic extends GetxController {
   final RegisterState state = RegisterState();
-  final LoginState stateLogin = Get.find<LoginLogic>().state;
+  final LoginState stateLogin = Get
+      .find<LoginLogic>()
+      .state;
 
   register() async {
     String username = stateLogin.usernameCtrl.text.trim();
@@ -26,7 +27,7 @@ class RegisterLogic extends GetxController {
       ToastUtil.showToast("两次密码不一致");
       return;
     }
-    bool isSuccess = await ApiUser.signUp(username, password, verify);
+    bool isSuccess = await ApiUser.signUp(username, password);
     if (isSuccess) {
       ToastUtil.showToast("注册成功");
       Get.offNamed(Routes.login);

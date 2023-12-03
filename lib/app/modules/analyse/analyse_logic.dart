@@ -12,7 +12,7 @@ class AnalyseLogic extends GetxController {
         ? DateUtil.getLastMonthFormattedDate()
         : DateUtil.getNowFormattedDate();
     return (await ApiConsume.getOut(type: "month", date: "$date 00:00:00"))
-            ?.abs() ??
+        ?.abs() ??
         0.0;
   }
 
@@ -22,7 +22,7 @@ class AnalyseLogic extends GetxController {
         : DateUtil.getNowFormattedDate();
 
     return (await ApiConsume.getIn(type: "month", date: "$date 00:00:00"))
-            ?.abs() ??
+        ?.abs() ??
         0.0;
   }
 

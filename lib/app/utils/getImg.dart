@@ -30,10 +30,10 @@ class GetImg {
 
   static Future<Image> crop(XFile xFile) async {
     Uint8List bytes =
-        await Get.to(
-                () => {}
-            // CropHeader(FileImage(File(xFile.path)))
-        );
+    await Get.to(
+            () => {}
+      // CropHeader(FileImage(File(xFile.path)))
+    );
     getPath(bytes);
     return Image.memory(bytes);
   }
@@ -41,7 +41,9 @@ class GetImg {
   static Future<void> getPath(Uint8List bytes) async {
     var tempDir = await getTemporaryDirectory();
     var file = await File(
-            '${tempDir.path}/image_${DateTime.now().millisecondsSinceEpoch}.png')
+        '${tempDir.path}/image_${DateTime
+            .now()
+            .millisecondsSinceEpoch}.png')
         .create();
     file.writeAsBytesSync(bytes);
     // state.path = file.path;

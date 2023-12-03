@@ -17,7 +17,9 @@ class BudgetPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logic = Get.find<BudgetLogic>();
-    final state = Get.find<BudgetLogic>().state;
+    final state = Get
+        .find<BudgetLogic>()
+        .state;
 
     return Scaffold(
       appBar: MyTopBar(

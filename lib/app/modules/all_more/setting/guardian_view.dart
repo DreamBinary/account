@@ -53,7 +53,7 @@ class GuardianPage extends StatelessWidget {
                               String code = snapshot.data ?? "6rhhc6zc";
                               return Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
+                                MainAxisAlignment.spaceAround,
                                 children: [
                                   Text(
                                     code,
@@ -71,7 +71,8 @@ class GuardianPage extends StatelessWidget {
                                         splashRadius: 20,
                                         icon: const Icon(Icons.copy),
                                         onPressed: () {
-                                          FlutterClipboard.copy("邀请码: $code");
+                                          FlutterClipboard.copy(
+                                              "邀请码: $code");
                                           ToastUtil.showToast("复制到剪切板");
                                         },
                                       ),

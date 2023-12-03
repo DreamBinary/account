@@ -12,11 +12,10 @@ class MyDatePicker extends StatefulWidget {
   final bool isSingleDay;
   final Function(String, String, bool) changeTime;
 
-  const MyDatePicker(
-      {this.isSingleDay = false,
-      this.isSingleMonth = false,
-      required this.changeTime,
-      Key? key})
+  const MyDatePicker({this.isSingleDay = false,
+    this.isSingleMonth = false,
+    required this.changeTime,
+    Key? key})
       : super(key: key);
 
   @override
@@ -41,96 +40,98 @@ class _MyDatePickerState extends State<MyDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (!widget.isSingleMonth && !widget.isSingleDay)
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: MaterialButton(
-                onPressed: () {
-                  setState(() {
-                    isMonth = !isMonth;
-                  });
-                },
-                visualDensity: VisualDensity.compact,
+    return SizedBox(
+      height: 400.h,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (!widget.isSingleMonth && !widget.isSingleDay)
+            Align(
+              alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 15.0),
+                child: MaterialButton(
+                  onPressed: () {
+                    setState(() {
+                      isMonth = !isMonth;
+                    });
+                  },
+                  visualDensity: VisualDensity.compact,
+                  shape: const StadiumBorder(),
+                  child: Text(
+                    isMonth ? "选择日期" : "选择月份",
+                    style: AppTS.small,
+                  ),
+                ),
+              ),
+            ),
+          Expanded(
+            child: isMonth
+                ? MonthPicker(
+              onTimeChanged: (value) {
+                startTime = value;
+                endTime = value;
+              },
+            )
+                : DatePicker(
+              isSingleDay: widget.isSingleDay,
+              onStarTimeChanged: (value) {
+                startTime = value;
+              },
+              onEndTimeChanged: (value) {
+                endTime = value;
+              },
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              MaterialButton(
                 shape: const StadiumBorder(),
+                onPressed: () {
+                  Get.back();
+                },
                 child: Text(
-                  isMonth ? "选择日期" : "选择月份",
+                  "取消",
                   style: AppTS.small,
                 ),
               ),
-            ),
-          ),
-        Expanded(
-          child: isMonth
-              ? MonthPicker(
-                  onTimeChanged: (value) {
-                    startTime = value;
-                    endTime = value;
-                  },
-                )
-              : DatePicker(
-                  isSingleDay: widget.isSingleDay,
-                  onStarTimeChanged: (value) {
-                    startTime = value;
-                  },
-                  onEndTimeChanged: (value) {
-                    endTime = value;
-                  },
-                ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            MaterialButton(
-              shape: const StadiumBorder(),
-              onPressed: () {
-                Get.back();
-              },
-              child: Text(
-                "取消",
-                style: AppTS.small,
-              ),
-            ),
-            MaterialButton(
-              shape: const StadiumBorder(),
-              onPressed: () {
-                // isMonth
-                //     ? widget.changeTime("$startTime-01 00:00:00", "$startTime-01 00:00:00")
-                //     : widget.changeTime("$startTime 00:00:00", "$endTime 00:00:00");
-                if (startTime == null) {
-                  if (isMonth) {
-                    startTime = "2023-01";
-                    endTime = startTime;
-                  } else {
-                    startTime = DateUtil.getNowFormattedDate();
-                    endTime = startTime;
+              MaterialButton(
+                shape: const StadiumBorder(),
+                onPressed: () {
+                  // isMonth
+                  //     ? widget.changeTime("$startTime-01 00:00:00", "$startTime-01 00:00:00")
+                  //     : widget.changeTime("$startTime 00:00:00", "$endTime 00:00:00");
+                  if (startTime == null) {
+                    if (isMonth) {
+                      startTime = "2023-01";
+                      endTime = startTime;
+                    } else {
+                      startTime = DateUtil.getNowFormattedDate();
+                      endTime = startTime;
+                    }
                   }
-                }
-                widget.changeTime(startTime!, endTime!, isMonth);
-                Get.back();
-              },
-              child: Text(
-                "确定",
-                style: AppTS.small,
+                  widget.changeTime(startTime!, endTime!, isMonth);
+                  Get.back();
+                },
+                child: Text(
+                  "确定",
+                  style: AppTS.small,
+                ),
               ),
-            ),
-          ],
-        )
-      ],
+            ],
+          )
+        ],
+      ),
     );
   }
 }
 
 class DatePicker extends StatelessWidget {
-  const DatePicker(
-      {required this.onStarTimeChanged,
-      required this.onEndTimeChanged,
-      required this.isSingleDay,
-      Key? key})
+  const DatePicker({required this.onStarTimeChanged,
+    required this.onEndTimeChanged,
+    required this.isSingleDay,
+    Key? key})
       : super(key: key);
   final bool isSingleDay;
   final ValueChanged<String> onStarTimeChanged;
@@ -167,11 +168,13 @@ class DatePicker extends StatelessWidget {
         if (date.runtimeType == PickerDateRange) {
           final DateTime rangeStartDate = date.startDate!;
           final DateTime rangeEndDate =
-              date.endDate == null ? date.startDate! : date.endDate!;
+          date.endDate == null ? date.startDate! : date.endDate!;
           onStarTimeChanged(
-              "${rangeStartDate.year}-${rangeStartDate.month.toString().padLeft(2, "0")}-${rangeStartDate.day.toString().padLeft(2, "0")}");
+              "${rangeStartDate.year}-${rangeStartDate.month.toString().padLeft(
+                  2, "0")}-${rangeStartDate.day.toString().padLeft(2, "0")}");
           onEndTimeChanged(
-              "${rangeEndDate.year}-${rangeEndDate.month.toString().padLeft(2, "0")}-${rangeEndDate.day.toString().padLeft(2, "0")}");
+              "${rangeEndDate.year}-${rangeEndDate.month.toString().padLeft(
+                  2, "0")}-${rangeEndDate.day.toString().padLeft(2, "0")}");
         } else if (date.runtimeType == DateTime) {
           onStarTimeChanged(
             date.toString().split(" ")[0],
@@ -241,11 +244,10 @@ class _ScrollNum extends StatelessWidget {
   final ValueChanged<int>? onSelectedItemChanged;
   final int initialItem;
 
-  const _ScrollNum(
-      {required this.nums,
-      this.onSelectedItemChanged,
-      this.initialItem = 0,
-      Key? key})
+  const _ScrollNum({required this.nums,
+    this.onSelectedItemChanged,
+    this.initialItem = 0,
+    Key? key})
       : super(key: key);
 
   @override
@@ -264,15 +266,16 @@ class _ScrollNum extends StatelessWidget {
         onSelectedItemChanged: onSelectedItemChanged,
         children: List.generate(
           nums.length,
-          (index) => Container(
-            height: 50,
-            width: 100,
-            alignment: Alignment.center,
-            child: Text(
-              nums[index].toString().padLeft(2, "0"),
-              style: AppTS.big,
-            ),
-          ),
+              (index) =>
+              Container(
+                height: 50,
+                width: 100,
+                alignment: Alignment.center,
+                child: Text(
+                  nums[index].toString().padLeft(2, "0"),
+                  style: AppTS.big,
+                ),
+              ),
         ),
       ),
     );

@@ -19,7 +19,6 @@ class AnalysePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final logic = Get.find<AnalyseLogic>();
-    final state = Get.find<AnalyseLogic>().state;
 
     return Container(
       decoration: BoxDecoration(

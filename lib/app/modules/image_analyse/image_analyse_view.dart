@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:account/app/component/bar_chart.dart';
 import 'package:account/app/component/lines_text.dart';
-import 'package:account/app/component/myiconbtn.dart';
 import 'package:account/app/component/mytopbar.dart';
 import 'package:account/app/utils/extension.dart';
 import 'package:account/res/assets_res.dart';
@@ -63,11 +62,6 @@ class _ImageAnalysePageState extends State<ImageAnalysePage> {
             textAlign: TextAlign.center,
           ),
         ),
-        trailing: MyIconBtn(
-          onPressed: () {},
-          imgPath: AssetsRes.EXPORT,
-          color: AppColors.color_list[5],
-        ),
         backgroundColor: AppColors.color_list[1],
       ),
       body: SingleChildScrollView(
@@ -88,48 +82,48 @@ class _ImageAnalysePageState extends State<ImageAnalysePage> {
               ),
               child: _PiePart(date: date),
             ),
-            Text("类型占比柱状图", style: AppTS.small)
-                .paddingSymmetric(vertical: 15.h, horizontal: 20.w),
-            Container(
-                height: 200.h,
-                padding: EdgeInsets.only(right: 15.w),
-                child: FutureBuilder(
-                    future: logic.getTypeAll(date),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<double> percentage =
-                            snapshot.data!.map((e) => e.values.first).toList();
-                        List<String> type =
-                            snapshot.data!.map((e) => e.keys.first).toList();
-                        if (percentage.isNotEmpty) {
-                          return MyBarChart(y: percentage, x: type);
-                        } else {
-                          return Container(
-                            alignment: Alignment.center,
-                            child: Text(
-                              "无记录",
-                              style: AppTS.small,
-                            ),
-                          );
-                        }
-                      } else {
-                        return Center(
-                          child: ShimmerEffect(
-                            child: Container(
-                              width: 300.h,
-                              height: 175.h,
-                              decoration: BoxDecoration(
-                                color: AppColors.color_list[1].withAlpha(150),
-                                image: const DecorationImage(
-                                  image: AssetImage(AssetsRes.COVER_LINE),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                    })),
+            // Text("类型占比柱状图", style: AppTS.small)
+            //     .paddingSymmetric(vertical: 15.h, horizontal: 20.w),
+            // Container(
+            //     height: 200.h,
+            //     padding: EdgeInsets.only(right: 15.w),
+            //     child: FutureBuilder(
+            //         future: logic.getTypeAll(date),
+            //         builder: (context, snapshot) {
+            //           if (snapshot.hasData) {
+            //             List<double> percentage =
+            //                 snapshot.data!.map((e) => e.values.first).toList();
+            //             List<String> type =
+            //                 snapshot.data!.map((e) => e.keys.first).toList();
+            //             if (percentage.isNotEmpty) {
+            //               return MyBarChart(y: percentage, x: type);
+            //             } else {
+            //               return Container(
+            //                 alignment: Alignment.center,
+            //                 child: Text(
+            //                   "无记录",
+            //                   style: AppTS.small,
+            //                 ),
+            //               );
+            //             }
+            //           } else {
+            //             return Center(
+            //               child: ShimmerEffect(
+            //                 child: Container(
+            //                   width: 300.h,
+            //                   height: 175.h,
+            //                   decoration: BoxDecoration(
+            //                     color: AppColors.color_list[1].withAlpha(150),
+            //                     image: const DecorationImage(
+            //                       image: AssetImage(AssetsRes.COVER_LINE),
+            //                       fit: BoxFit.cover,
+            //                     ),
+            //                   ),
+            //                 ),
+            //               ),
+            //             );
+            //           }
+            //         })),
             Text("收支记录折线图", style: AppTS.small)
                 .paddingSymmetric(vertical: 15.h, horizontal: 20.w),
             Container(
@@ -192,41 +186,39 @@ class _PiePartState extends State<_PiePart> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         FutureBuilder(
-            future: logic.getTypeTop4(widget.date),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                List<double> percentage =
-                    snapshot.data!.map((e) => e.values.first).toList();
-                List<String> type =
-                    snapshot.data!.map((e) => e.keys.first).toList();
-                return SizedBox(
-                  height: 280,
-                  child: BubbleChart(
-                    percentages: percentage,
-                    types: type,
-                  ),
-                );
-                // // print(percentage);
-                // return MyPieChart(
-                //     percentage: percentage, radius: 100, legend: type);
-              } else {
-                return Center(
-                  child: ShimmerEffect(
-                    child: Container(
-                      width: 300.h,
-                      height: 175.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.color_list[1].withAlpha(150),
-                        image: const DecorationImage(
-                          image: AssetImage(AssetsRes.COVER_LINE),
-                          fit: BoxFit.cover,
-                        ),
+          future: logic.getTypeTop4(widget.date),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              List<double> percentage =
+                  snapshot.data!.map((e) => e.values.first).toList();
+              List<String> type =
+                  snapshot.data!.map((e) => e.keys.first).toList();
+              return SizedBox(
+                height: 280,
+                child: BubbleChart(
+                  percentages: percentage,
+                  types: type,
+                ),
+              );
+            } else {
+              return Center(
+                child: ShimmerEffect(
+                  child: Container(
+                    width: 300.h,
+                    height: 175.h,
+                    decoration: BoxDecoration(
+                      color: AppColors.color_list[1].withAlpha(150),
+                      image: const DecorationImage(
+                        image: AssetImage(AssetsRes.COVER_LINE),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                );
-              }
-            }),
+                ),
+              );
+            }
+          },
+        ),
         FutureBuilder(
           future: logic.getOutIn(date: widget.date),
           builder: (context, snapshot) {

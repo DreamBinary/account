@@ -42,11 +42,11 @@ class _SoundPageState extends State<SoundPage> {
     await session.configure(AudioSessionConfiguration(
       avAudioSessionCategory: AVAudioSessionCategory.playAndRecord,
       avAudioSessionCategoryOptions:
-          AVAudioSessionCategoryOptions.allowBluetooth |
-              AVAudioSessionCategoryOptions.defaultToSpeaker,
+      AVAudioSessionCategoryOptions.allowBluetooth |
+      AVAudioSessionCategoryOptions.defaultToSpeaker,
       avAudioSessionMode: AVAudioSessionMode.spokenAudio,
       avAudioSessionRouteSharingPolicy:
-          AVAudioSessionRouteSharingPolicy.defaultPolicy,
+      AVAudioSessionRouteSharingPolicy.defaultPolicy,
       avAudioSessionSetActiveOptions: AVAudioSessionSetActiveOptions.none,
       androidAudioAttributes: const AndroidAudioAttributes(
         contentType: AndroidAudioContentType.speech,
@@ -111,7 +111,9 @@ class _SoundPageState extends State<SoundPage> {
 
   @override
   Widget build(BuildContext context) {
-    int version = VersionCtrl.of(context)?.version ?? 0;
+    int version = VersionCtrl
+        .of(context)
+        ?.version ?? 0;
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -129,20 +131,20 @@ class _SoundPageState extends State<SoundPage> {
           trailing: version == 0
               ? null
               : Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Material(
-                    color: Colors.white,
-                    shape: const CircleBorder(),
-                    clipBehavior: Clip.antiAlias,
-                    child: IconButton(
-                      padding: const EdgeInsets.all(5),
-                      icon: const Icon(Icons.add),
-                      onPressed: () {
-                        Get.toNamed(Routes.add);
-                      },
-                    ),
-                  ),
-                ),
+            padding: const EdgeInsets.all(8),
+            child: Material(
+              color: Colors.white,
+              shape: const CircleBorder(),
+              clipBehavior: Clip.antiAlias,
+              child: IconButton(
+                padding: const EdgeInsets.all(5),
+                icon: const Icon(Icons.add),
+                onPressed: () {
+                  Get.toNamed(Routes.add);
+                },
+              ),
+            ),
+          ),
         ),
         body: Stack(
           children: [
@@ -167,7 +169,7 @@ class _SoundPageState extends State<SoundPage> {
                   });
                   await stopRecorder();
                   Get.to(LoadingPage(future: ApiSound.upSound(_mPath!)))?.then(
-                      (value) => Get.toNamed(Routes.add, arguments: value));
+                          (value) => Get.toNamed(Routes.add, arguments: value));
                   // var words = await ApiSound.upSound(_mPath!);
                   // Get.toNamed(Routes.add, arguments: words);
                 },

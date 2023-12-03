@@ -39,30 +39,30 @@ class PasswordTextField extends StatelessWidget {
         controller: ctrl,
         focusNode: focusNode,
         decoration: InputDecoration(
-            hintText: hint,
-            prefixIcon: Icon(prefixIcon),
-            suffix: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Visibility(
-                    visible: focus.value && clearVisible.value,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      onTap: () => {onClear(), clearVisible.value = false},
-                      child: const Icon(Icons.clear, size: 15),
-                    )),
-                Visibility(
-                    visible: focus.value && clearVisible.value,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      onTap: () =>
-                          {passwordVisible.value = !passwordVisible.value},
-                      child:
-                          const Icon(Icons.remove_red_eye_outlined, size: 15),
-                    )),
-              ],
-            )),
+          hintText: hint,
+          prefixIcon: Icon(prefixIcon),
+          suffix: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Visibility(
+                  visible: focus.value && clearVisible.value,
+                  child: InkWell(
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    onTap: () => {onClear(), clearVisible.value = false},
+                    child: const Icon(Icons.clear, size: 15),
+                  )),
+              Visibility(
+                  visible: focus.value && clearVisible.value,
+                  child: InkWell(
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    onTap: () =>
+                        {passwordVisible.value = !passwordVisible.value},
+                    child: const Icon(Icons.remove_red_eye_outlined, size: 15),
+                  )),
+            ],
+          ),
+        ),
         obscureText: !focus.value || !passwordVisible.value,
         textInputAction: textInputAction,
         maxLength: 10,

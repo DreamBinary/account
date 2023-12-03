@@ -13,7 +13,6 @@ import '../../component/croping_page.dart';
 import '../../component/myshowbottomsheet.dart';
 import '../../component/picchoicebtn.dart';
 import '../../component/sound_page.dart';
-import '../../data/net/api_img.dart';
 import '../../theme/app_colors.dart';
 import '../../utils/camera_util.dart';
 import '../../utils/floating_util.dart';
@@ -139,12 +138,14 @@ class _SRoutePageState extends State<_SRoutePage>
     super.initState();
     screenListener.addScreenShotListener(
       (filePath) async {
-        // print(filePath);
         FloatingUtil.end();
         await Future.delayed(const Duration(milliseconds: 100));
-        var urls = await ApiImg.upImg(imgPaths: [filePath]);
-        Get.to(CroppingPage(
-            fileName: urls[0].split('/').last, isScreenShot: true));
+        Get.to(CroppingPage(filepath: filePath));
+        // var urls = await ApiImg.upImg(imgPaths: [filePath]);
+        // Get.to(CroppingPage(
+        //     fileName: urls[0]
+        //         .split('/')
+        //         .last, isScreenShot: true));
         screenListener.dispose();
       },
     );
@@ -194,7 +195,7 @@ class _SRoutePageState extends State<_SRoutePage>
               padding: const EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: currentIndex == 1
-                    ?  AppColors.color_list[0]
+                    ? AppColors.color_list[0]
                     : Colors.transparent,
                 shape: BoxShape.circle,
               ),
@@ -210,7 +211,7 @@ class _SRoutePageState extends State<_SRoutePage>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: PhysicalModel(
         color: Colors.transparent,
-        shape: BoxShape.circle  ,
+        shape: BoxShape.circle,
         elevation: 10,
         child: Container(
           height: 100,
@@ -262,8 +263,11 @@ class _SRoutePageState extends State<_SRoutePage>
               if (image == null) {
                 return;
               }
-              List<String> urls = await CameraUtil.upImg(image);
-              Get.to(CroppingPage(fileName: urls[0].split('/').last));
+              Get.to(CroppingPage(filepath: image.path));
+              // List<String> urls = await CameraUtil.upImg(image);
+              // Get.to(CroppingPage(fileName: urls[0]
+              //     .split('/')
+              //     .last));
             },
           ),
           SizedBox(height: 10.h),
@@ -274,8 +278,11 @@ class _SRoutePageState extends State<_SRoutePage>
               if (image == null) {
                 return;
               }
-              List<String> urls = await CameraUtil.upImg(image);
-              Get.to(CroppingPage(fileName: urls[0].split('/').last));
+              Get.to(CroppingPage(filepath: image.path));
+              // List<String> urls = await CameraUtil.upImg(image);
+              // Get.to(CroppingPage(fileName: urls[0]
+              //     .split('/')
+              //     .last));
             },
           ),
           SizedBox(height: 20.h),

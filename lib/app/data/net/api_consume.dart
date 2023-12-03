@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../../theme/app_string.dart';
 import '../../utils/mmkv.dart';
@@ -23,11 +23,12 @@ class ApiConsume {
     } else {
       return null;
     }
+    debugPrint("getRemain");
     var response = await DioUtil().get(url,
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
-      return response?.data["data"]["balance"];
+    if (response?.data["code"] == 0) {
+      return response?.data["data"]["sum"];
     }
     return null;
   }
@@ -50,7 +51,11 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
+    print(url);
+    print("object");
+    print(response?.data["data"]);
+
+    if (response?.data["code"] == 0) {
       return response?.data["data"]["sum"];
     }
     return null;
@@ -74,9 +79,12 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
+    // print("getIn");
+    print(response?.data["data"]);
+    if (response?.data["code"] == 0) {
       return response?.data["data"]["sum"];
     }
+
     return null;
   }
 
@@ -85,7 +93,7 @@ class ApiConsume {
     var response = await DioUtil().get(Url.yearRecord,
         map: {"date": date}, options: Options(headers: {"token": token}));
     List<ConsumeData> list = [];
-    if (response?.data["code"] == 200) {
+    if (response?.data["code"] == 0) {
       for (var item in response?.data["data"]["list"]) {
         list.add(ConsumeData.fromJson(item));
       }
@@ -114,7 +122,7 @@ class ApiConsume {
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
 
-    if (response?.data["code"] == 200) {
+    if (response?.data["code"] == 0) {
       for (var item in response?.data["data"]["list"]) {
         list.add(ConsumeData.fromJson(item));
       }
@@ -122,16 +130,21 @@ class ApiConsume {
     return list;
   }
 
-  static Future<bool> addConsume(ConsumeData cData) async {
+  static Future<num?> addConsume(ConsumeData cData) async {
     String token = MMKVUtil.getString(AppString.mmToken);
-    var response = await DioUtil().post(Url.addRecord,
-        data: cData.toJson(),
-        options: Options(
-            headers: {"token": token}, contentType: "application/json"));
-    if (response?.data["code"] == 200) {
-      return true;
+    var response = await DioUtil().post(
+      Url.addRecord,
+      data: cData.toJson(),
+      options:
+          Options(headers: {"token": token}, contentType: "application/json"),
+    );
+    print("addConsume");
+    print(response?.data);
+    if (response?.data["code"] == 0) {
+      num id = response?.data["consumption_id"];
+      return id;
     }
-    return false;
+    return null;
   }
 
   static Future<List<Map<String, List<ConsumeData>>>> getRecordMap(
@@ -142,7 +155,7 @@ class ApiConsume {
 
     var response = await DioUtil().get(url,
         map: {"date": date}, options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
+    if (response?.data["code"] == 0) {
       var keys = response?.data["data"].keys.toList();
       List<dynamic> values = response?.data["data"].values.toList();
       int len = keys.length;
@@ -158,6 +171,7 @@ class ApiConsume {
         list.add({keys[i]: cData});
       }
     }
+    print(list);
     return list;
   }
 
@@ -170,8 +184,10 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: {"start": start, "end": end},
         options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
+    print("getRangeRecordMap");
+    if (response?.data["code"] == 0) {
       var keys = response?.data["data"].keys.toList();
+      print(keys);
       List<dynamic> values = response?.data["data"].values.toList();
       int len = keys.length;
       for (int i = 0; i < len; ++i) {
@@ -196,8 +212,9 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: {"start": start, "end": end},
         options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
-      return response?.data["data"]["sum"] ?? 0.0;
+    if (response?.data["code"] == 0) {
+      var result = double.parse(response!.data["data"]["sum"].toString());
+      return result;
     }
     return null;
   }
@@ -206,54 +223,57 @@ class ApiConsume {
       {required String start, required String end}) async {
     String token = MMKVUtil.getString(AppString.mmToken);
     String url = Url.rangeIn;
-
     var response = await DioUtil().get(url,
         map: {"start": start, "end": end},
         options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
-      return response?.data["data"]["sum"] ?? 0.0;
+    print(response);
+    if (response?.data["code"] == 0) {
+      var result = double.parse(response!.data["data"]["sum"].toString());
+      print("getRangeIn");
+      print(result);
+      return result;
     }
     return null;
   }
 
-  static Future<List<Map<String, double>>> getMonthTypePercent(
-      {required String date}) async {
-    String token = MMKVUtil.getString(AppString.mmToken);
-    List<Map<String, double>> list = [];
-    String url = Url.monthType;
+// static Future<List<Map<String, double>>> getMonthTypePercent(
+//     {required String date}) async {
+//   String token = MMKVUtil.getString(AppString.mmToken);
+//   List<Map<String, double>> list = [];
+//   String url = Url.monthType;
+//   print("getMonthTypePercent");
+//   var response = await DioUtil().get(url,
+//       map: {"date": date}, options: Options(headers: {"token": token}));
+//   if (response?.data["code"] == 0) {
+//     var keys = response?.data["data"].keys.toList();
+//     List<dynamic> values = response?.data["data"].values.toList();
+//
+//     int len = keys.length;
+//     for (int i = 0; i < len; ++i) {
+//       double v = values[i];
+//       v = v.toPrecision(2);
+//       String k = ConsumeData.types[int.parse(keys[i]) - 1];
+//
+//       list.add({k: v});
+//     }
+//   }
+//   return list;
+// }
 
-    var response = await DioUtil().get(url,
-        map: {"date": date}, options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
-      var keys = response?.data["data"].keys.toList();
-      List<dynamic> values = response?.data["data"].values.toList();
-
-      int len = keys.length;
-      for (int i = 0; i < len; ++i) {
-        double v = values[i];
-        v = v.toPrecision(2);
-        String k = ConsumeData.types[int.parse(keys[i]) - 1];
-
-        list.add({k: v});
-      }
-    }
-    return list;
-  }
-
-  static Future<List<double>> getThirtyOutList({required String date}) async {
-    String token = MMKVUtil.getString(AppString.mmToken);
-    List<double> list = [];
-    String url = Url.thirtyOutMoney;
-
-    var response = await DioUtil().get(url,
-        map: {"date": date}, options: Options(headers: {"token": token}));
-    if (response?.data["code"] == 200) {
-      List<dynamic> data = response?.data["data"]["money"].toList();
-      for (double e in data) {
-        list.add(e.abs());
-      }
-    }
-    print(list);
-    return list;
-  }
+// static Future<List<double>> getThirtyOutList({required String date}) async {
+//   String token = MMKVUtil.getString(AppString.mmToken);
+//   List<double> list = [];
+//   String url = Url.thirtyOutMoney;
+//
+//   var response = await DioUtil().get(url,
+//       map: {"date": date}, options: Options(headers: {"token": token}));
+//   if (response?.data["code"] == 0) {
+//     List<dynamic> data = response?.data["data"]["money"].toList();
+//     for (double e in data) {
+//       list.add(e.abs());
+//     }
+//   }
+//   print(list);
+//   return list;
+// }
 }
