@@ -1,4 +1,6 @@
+import 'package:account/app/data/net/api_consume.dart';
 import 'package:account/app/utils/extension.dart';
+import 'package:account/app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,9 +16,14 @@ class DayRecord extends StatefulWidget {
   final Color colorBg;
   final Map<String, List<ConsumeData>> data;
   final bool isOld;
+  final VoidCallback onRefresh;
 
   const DayRecord(
-      {Key? key, required this.colorBg, required this.data, this.isOld = false})
+      {Key? key,
+      required this.colorBg,
+      required this.data,
+      this.isOld = false,
+      required this.onRefresh})
       : super(key: key);
 
   @override
@@ -89,9 +96,16 @@ class _DayRecordState extends State<DayRecord> {
                     height: 80.h,
                     elevation: 8,
                     showBadge: true,
-                    onBadgeTap: () {
+                    onBadgeTap: () async {
                       // todo
-                      // delete
+                      bool result = await ApiConsume.deleteFromBook(
+                          10, widget.data.values.first[index].consumptionId);
+                      if (result) {
+                        ToastUtil.showToast("删除成功");
+                      } else {
+                        ToastUtil.showToast("删除失败");
+                      }
+                      widget.onRefresh();
                     },
                     onPressed: () {
                       Get.toNamed(

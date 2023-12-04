@@ -1,3 +1,4 @@
+import 'package:account/app/data/database/db_consume.dart';
 import 'package:get/get.dart';
 
 import '../../data/entity/consume.dart';
@@ -9,13 +10,14 @@ class HomeLogic extends GetxController {
 
   Future<List<Map<String, List<ConsumeData>>>> getRecord(
       {required String start, String? end, bool isMonth = false}) async {
+    List<Map<String, List<ConsumeData>>>? record;
     if (isMonth) {
       // if (state.start == null ||
       //     state.start != start ||
       //     state.isMonth != isMonth) {
       state.start = start;
       state.isMonth = isMonth;
-      state.record = await ApiConsume.getRecordMap(
+      record = await ApiConsume.getRecordMap(
           date: "${start.split(" ")[0]}-01 00:00:00");
       // }
     } else {
@@ -25,11 +27,17 @@ class HomeLogic extends GetxController {
       //     state.isMonth != isMonth) {
       state.start = start;
       state.isMonth = isMonth;
-      state.record = await ApiConsume.getRangeRecordMap(
+      record = await ApiConsume.getRangeRecordMap(
           start: "${start.split(" ")[0]} 00:00:00",
           end: "${end?.split(" ")[0]} 23:59:59");
     }
     // }
+    if (record != null) {
+      state.record = record;
+      await DBConsume.addConsume(state.record!);
+    } else {
+      state.record = await DBConsume.getRangeRecordMap();
+    }
     return state.record!;
   }
 

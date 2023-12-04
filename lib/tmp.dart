@@ -1,9 +1,22 @@
 
+void main() async {
 
-void main(){
+  print(await test());
 
-  var k = DateTime.parse("2021-01-01 00:00:00");
-  // k before 30 days
-  var kk = k.subtract(Duration(days: 30));
-  print(kk);
+  return;
+}
+
+test() async {
+  await Future.delayed(Duration(seconds: 5));
+  for (var i = 0; i < 10; i++) {
+    delay();
+  }
+
+  return "test";
+}
+
+Future<String> delay() async {
+  await Future.delayed(Duration(seconds: 5));
+  print("delay");
+  return "delay";
 }

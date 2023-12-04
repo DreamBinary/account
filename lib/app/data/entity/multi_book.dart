@@ -31,6 +31,7 @@ class MultiBook {
 
   String get modifyTime => _modifyTime;
 
+  // toJson
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['multiLedgerId'] = _multiLedgerId;

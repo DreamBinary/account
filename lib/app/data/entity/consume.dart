@@ -41,6 +41,17 @@ class ConsumeData {
     AssetsRes.CLASS_OTHER,
   ];
 
+  num consumptionId;
+  String consumptionName;
+  String description;
+  num amount;
+  int typeId;
+  String store;
+  String consumeTime;
+  String consumeDate;
+  String credential;
+  String? imgUrl;
+
   ConsumeData({
     this.consumptionId = 0,
     required this.consumptionName,
@@ -65,48 +76,22 @@ class ConsumeData {
         credential: json['credential'],
       );
 
-  // {
-  //   credential = json['credential'] ?? "";
-  //   consumptionName = json['consumptionName'] ?? "";
-  //   description = json['description'] ?? "";
-  //   amount = json['amount'] ?? 0.0;
-  //   typeId = json['typeId'] == null || json["typeId"] - 1 < 0
-  //       ? 15
-  //       : json['typeId'] - 1;
-  //   store = json['store'];
-  //   List<String> str = (json['consumeTime'] ?? DateUtil.getNowFormattedDate())
-  //       .toString()
-  //       .split(" ");
-  //   consumeTime = str.length > 1 ? str[1] : "00:00:00";
-  //   consumeDate = str[0];
-  // }
-
-  num consumptionId;
-  String consumptionName;
-  String description;
-  num amount;
-  int typeId;
-  String store;
-  String consumeTime;
-  String consumeDate;
-  String credential;
-  String? imgUrl;
-
-  @override
-  String toString() {
-    return 'ConsumeData{ consumptionName: $consumptionName, description: $description, amount: $amount, type: $typeId, store: $store, consumeTime: $consumeTime, consumeDate: $consumeDate, credential: $credential}';
-  }
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['typeId'] = typeId;
-    map['description'] = description;
-    map['consumeTime'] = "$consumeDate 00:00:00";
-    map['credential'] = credential;
-    map['store'] = store;
+    map['consumptionId'] = consumptionId;
     map['consumptionName'] = consumptionName;
-    map['consumptionId'] = 1;
+    map['description'] = description;
     map['amount'] = amount;
+    map['typeId'] = typeId;
+    map['store'] = store;
+    map['consumeTime'] = "$consumeDate $consumeTime";
+    map['credential'] = credential;
     return map;
+  }
+
+  // toString
+  @override
+  String toString() {
+    return 'ConsumeData{consumptionId: $consumptionId, consumptionName: $consumptionName, description: $description, amount: $amount, typeId: $typeId, store: $store, consumeTime: $consumeTime, consumeDate: $consumeDate, credential: $credential}';
   }
 }

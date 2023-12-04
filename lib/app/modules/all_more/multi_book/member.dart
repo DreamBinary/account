@@ -1,7 +1,7 @@
 import 'package:account/app/component/mytopbar.dart';
 import 'package:account/app/data/entity/consume.dart';
 import 'package:account/app/data/net/api_multi.dart';
-import 'package:account/app/modules/all_more/setting/multi_book/invite_view.dart';
+import 'package:account/app/modules/all_more/multi_book/invite_view.dart';
 import 'package:account/app/theme/app_colors.dart';
 import 'package:account/app/theme/app_text_theme.dart';
 import 'package:account/res/assets_res.dart';
@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../../../component/dayrecord.dart';
+import '../../../component/dayrecord.dart';
 
 class MemberPage extends StatefulWidget {
   final num multiLedgerId;
@@ -116,6 +116,9 @@ class _MemberPageState extends State<MemberPage> {
                               (index) => DayRecord(
                                 colorBg: Colors.white,
                                 data: data[index],
+                                onRefresh: () {
+                                  setState(() {});
+                                },
                               ),
                             ),
                           ],

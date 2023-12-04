@@ -44,7 +44,7 @@ class ApiGoal {
     String token = MMKVUtil.getString(AppString.mmToken);
     var response = await DioUtil().delete(
       Url.goal,
-      map: {"goalId": goal.goalId},
+      data: {"goalId": goal.goalId},
       options: Options(
         headers: {"token": token},
         contentType: "application/json",

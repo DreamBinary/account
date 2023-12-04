@@ -4,7 +4,7 @@ import 'package:account/app/component/mydialog.dart';
 import 'package:account/app/component/mytopbar.dart';
 import 'package:account/app/data/entity/book.dart';
 import 'package:account/app/data/net/api_book.dart';
-import 'package:account/app/modules/all_more/setting/multi_book/multi_book_view.dart';
+import 'package:account/app/modules/all_more/multi_book/multi_book_view.dart';
 import 'package:account/app/theme/app_text_theme.dart';
 import 'package:account/app/utils/toast.dart';
 import 'package:account/res/assets_res.dart';
@@ -260,7 +260,7 @@ class _MMyBookPageState extends State<_MMyBookPage> {
             var result = await ApiBook.addBook(name);
             if (result) {
               ToastUtil.showToast("添加成功");
-              data = await ApiBook.getBook();
+              data = await logic.getAllBook();
               setState(() {});
             } else {
               ToastUtil.showToast("添加失败");

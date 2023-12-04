@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 
 import '../../theme/app_string.dart';
 import '../../utils/mmkv.dart';
@@ -23,7 +22,7 @@ class ApiConsume {
     } else {
       return null;
     }
-    debugPrint("getRemain");
+    // debugPrint("getRemain");
     var response = await DioUtil().get(url,
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
@@ -51,9 +50,9 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
-    print(url);
-    print("object");
-    print(response?.data["data"]);
+    // print(url);
+    // print("object");
+    // print(response?.data["data"]);
 
     if (response?.data["code"] == 0) {
       return response?.data["data"]["sum"];
@@ -80,7 +79,7 @@ class ApiConsume {
         map: date == null ? null : {"date": date},
         options: Options(headers: {"token": token}));
     // print("getIn");
-    print(response?.data["data"]);
+    // print(response?.data["data"]);
     if (response?.data["code"] == 0) {
       return response?.data["data"]["sum"];
     }
@@ -132,14 +131,13 @@ class ApiConsume {
 
   static Future<num?> addConsume(ConsumeData cData) async {
     String token = MMKVUtil.getString(AppString.mmToken);
+
     var response = await DioUtil().post(
       Url.addRecord,
       data: cData.toJson(),
       options:
           Options(headers: {"token": token}, contentType: "application/json"),
     );
-    print("addConsume");
-    print(response?.data);
     if (response?.data["code"] == 0) {
       num id = response?.data["consumption_id"];
       return id;
@@ -147,7 +145,36 @@ class ApiConsume {
     return null;
   }
 
-  static Future<List<Map<String, List<ConsumeData>>>> getRecordMap(
+  // delete from book
+  static Future<bool> deleteFromBook(num bookId, num consumptionId) async {
+    String token = MMKVUtil.getString(AppString.mmToken);
+    var response = await DioUtil().delete(
+      Url.bookRecord,
+      query: {"ledgerId": bookId, "consumptionId": consumptionId},
+      options: Options(headers: {"token": token}),
+    );
+    if (response?.data["code"] == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  // update
+  static Future<bool> updateConsume(ConsumeData cData) async {
+    String token = MMKVUtil.getString(AppString.mmToken);
+    var response = await DioUtil().put(
+      Url.addRecord,
+      map: cData.toJson(),
+      options:
+          Options(headers: {"token": token}, contentType: "application/json"),
+    );
+    if (response?.data["code"] == 0) {
+      return true;
+    }
+    return false;
+  }
+
+  static Future<List<Map<String, List<ConsumeData>>>?> getRecordMap(
       {required String date}) async {
     String token = MMKVUtil.getString(AppString.mmToken);
     List<Map<String, List<ConsumeData>>> list = [];
@@ -170,9 +197,9 @@ class ApiConsume {
 
         list.add({keys[i]: cData});
       }
+      return list;
     }
-    print(list);
-    return list;
+    return null;
   }
 
   static Future<List<Map<String, List<ConsumeData>>>> getRangeRecordMap(
@@ -184,10 +211,10 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: {"start": start, "end": end},
         options: Options(headers: {"token": token}));
-    print("getRangeRecordMap");
+    // print("getRangeRecordMap");
     if (response?.data["code"] == 0) {
       var keys = response?.data["data"].keys.toList();
-      print(keys);
+      // print(keys);
       List<dynamic> values = response?.data["data"].values.toList();
       int len = keys.length;
       for (int i = 0; i < len; ++i) {
@@ -226,11 +253,11 @@ class ApiConsume {
     var response = await DioUtil().get(url,
         map: {"start": start, "end": end},
         options: Options(headers: {"token": token}));
-    print(response);
+    // print(response);
     if (response?.data["code"] == 0) {
       var result = double.parse(response!.data["data"]["sum"].toString());
-      print("getRangeIn");
-      print(result);
+      // print("getRangeIn");
+      // print(result);
       return result;
     }
     return null;

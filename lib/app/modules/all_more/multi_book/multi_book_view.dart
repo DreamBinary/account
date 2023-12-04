@@ -1,26 +1,25 @@
 import 'package:account/app/component/loading_page.dart';
 import 'package:account/app/component/mycard.dart';
 import 'package:account/app/component/mydialog.dart';
+import 'package:account/app/component/myelevatedbtn.dart';
+import 'package:account/app/component/myiconbtn.dart';
 import 'package:account/app/component/myshowbottomsheet.dart';
 import 'package:account/app/component/mytopbar.dart';
+import 'package:account/app/component/swipe_book.dart';
+import 'package:account/app/component/version_ctrl.dart';
 import 'package:account/app/data/entity/multi_book.dart';
 import 'package:account/app/data/net/api_multi.dart';
-import 'package:account/app/modules/all_more/setting/multi_book/member.dart';
-import 'package:account/app/modules/all_more/setting/multi_book/multi_book_logic.dart';
+import 'package:account/app/modules/all_more/multi_book/member.dart';
+import 'package:account/app/modules/all_more/multi_book/multi_book_logic.dart';
+import 'package:account/app/theme/app_colors.dart';
+import 'package:account/app/theme/app_string.dart';
 import 'package:account/app/theme/app_text_theme.dart';
+import 'package:account/app/utils/mmkv.dart';
 import 'package:account/app/utils/toast.dart';
 import 'package:account/res/assets_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../../component/myelevatedbtn.dart';
-import '../../../../component/myiconbtn.dart';
-import '../../../../component/swipe_book.dart';
-import '../../../../component/version_ctrl.dart';
-import '../../../../theme/app_colors.dart';
-import '../../../../theme/app_string.dart';
-import '../../../../utils/mmkv.dart';
 
 class MultiBookPage extends StatefulWidget {
   const MultiBookPage({Key? key}) : super(key: key);

@@ -1,5 +1,7 @@
 import 'package:account/app/component/mytopbar.dart';
+import 'package:account/app/data/entity/book.dart';
 import 'package:account/app/data/entity/consume.dart';
+import 'package:account/app/data/net/api_book.dart';
 import 'package:account/app/routes/app_pages.dart';
 import 'package:account/app/theme/app_colors.dart';
 import 'package:account/app/theme/app_text_theme.dart';
@@ -26,12 +28,14 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
   final state = Get.find<AddLogic>().state;
   late final TabController tabCtrl =
       TabController(initialIndex: 1, length: 2, vsync: this);
+  var isUpdate = false;
 
   @override
   void initState() {
     super.initState();
     if (Get.arguments.runtimeType == ConsumeData) {
       logic.init(Get.arguments as ConsumeData);
+      isUpdate = true;
     } else if (Get.arguments.runtimeType == List<String>) {
       logic.initWords(Get.arguments as List<String>);
     }
@@ -47,11 +51,20 @@ class _AddPageState extends State<AddPage> with SingleTickerProviderStateMixin {
             backgroundColor: AppColors.color_list[5],
           ),
           onPressed: () async {
-            bool result = await logic.upAdd();
-            if (result) {
-              ToastUtil.showToast("添加成功");
+            if (isUpdate) {
+              bool result = await logic.upEdit();
+              if (result) {
+                ToastUtil.showToast("修改成功");
+              } else {
+                ToastUtil.showToast("修改失败");
+              }
             } else {
-              ToastUtil.showToast("添加失败");
+              bool result = await logic.upAdd();
+              if (result) {
+                ToastUtil.showToast("添加成功");
+              } else {
+                ToastUtil.showToast("添加失败");
+              }
             }
             Get.offAllNamed(Routes.route);
           },
@@ -128,6 +141,25 @@ class IncomePage extends StatelessWidget {
               ),
             ),
             const AddItem("分类", _ClassSelect()),
+            AddItem(
+              "账本",
+              FutureBuilder(
+                future: ApiBook.getBook(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Book> bookList = snapshot.data as List<Book>;
+                    return _BookSelect(
+                      bookList: bookList,
+                      onChanged: (value) {
+                        // todo
+                      },
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),
@@ -210,6 +242,31 @@ class _ExpendPageState extends State<ExpendPage> {
               ),
             ),
             AddItem("分类", _ClassSelect(initvalue: state.typeId)),
+            AddItem(
+              "账本",
+              FutureBuilder(
+                future: ApiBook.getBook(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    List<Book> bookList = snapshot.data as List<Book>;
+                    if (bookList.isNotEmpty) {
+                      state.bookId = bookList[0].ledgerId.toInt();
+                    }
+                    return _BookSelect(
+                      bookList: bookList,
+                      onChanged: (value) {
+                        if (value == null) {
+                          return;
+                        }
+                        state.bookId = bookList[value].ledgerId.toInt();
+                      },
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+            ),
             // GestureDetector(
             //   onTap: () {
             //     myShowBottomSheet(
@@ -390,6 +447,49 @@ class _ClassSelectState extends State<_ClassSelect> {
           ),
         )
       ],
+    );
+  }
+}
+
+class _BookSelect extends StatefulWidget {
+  final List<Book> bookList;
+  final ValueChanged<int?> onChanged;
+
+  const _BookSelect({required this.bookList, required this.onChanged, Key? key})
+      : super(key: key);
+
+  @override
+  State<_BookSelect> createState() => _BookSelectState();
+}
+
+class _BookSelectState extends State<_BookSelect> {
+  int value = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 30.h,
+      child: DropdownButton(
+        value: value,
+        iconSize: 0,
+        borderRadius: BorderRadius.circular(15),
+        underline: const SizedBox(),
+        alignment: Alignment.center,
+        dropdownColor: AppColors.color_list[3],
+        items: List.generate(
+          widget.bookList.length,
+          (index) => DropdownMenuItem(
+            value: index,
+            onTap: () {
+              setState(() {
+                value = index;
+              });
+            },
+            child: Text(widget.bookList[index].ledgerName, style: AppTS.small),
+          ),
+        ),
+        onChanged: widget.onChanged,
+      ),
     );
   }
 }

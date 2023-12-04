@@ -1,6 +1,7 @@
-import 'package:account/app/data/net/api_book.dart';
 import 'package:account/app/data/net/api_consume.dart';
 import 'package:account/app/data/net/api_multi.dart';
+import 'package:account/app/modules/all_more/more/more_logic.dart';
+import 'package:account/app/modules/all_more/my_book/my_book_logic.dart';
 import 'package:account/app/routes/app_pages.dart';
 import 'package:account/app/utils/extension.dart';
 import 'package:flutter/material.dart';
@@ -168,11 +169,25 @@ class _SMorePage extends StatelessWidget {
   }
 }
 
-class _MMorePage extends StatelessWidget {
+class _MMorePage extends StatefulWidget {
   const _MMorePage({Key? key}) : super(key: key);
 
   @override
+  State<_MMorePage> createState() => _MMorePageState();
+}
+
+class _MMorePageState extends State<_MMorePage> {
+
+  @override
+  void initState() {
+    super.initState();
+    Get.put(MyBookLogic());
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+    final logic = Get.find<MyBookLogic>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -211,7 +226,7 @@ class _MMorePage extends StatelessWidget {
                             AppColors.color_list[1],
                             onPressed: () {
                               Get.to(
-                                LoadingPage(future: ApiBook.getBook()),
+                                LoadingPage(future: logic.getAllBook()),
                               )?.then((value) =>
                                   Get.toNamed(Routes.myBook, arguments: value));
                             },

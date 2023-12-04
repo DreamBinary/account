@@ -35,13 +35,14 @@ class Goal {
         json['saved_money'] as num,
       );
 
+  // toJson
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['goalId'] = goalId;
     map['goalName'] = goalName;
     map['userId'] = userId;
     map['money'] = money;
-    map['create_date'] = createDate;
+    map['createDate'] = createDate;
     map['deadline'] = deadline;
     map['saved_money'] = savedMoney;
     return map;

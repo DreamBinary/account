@@ -135,9 +135,13 @@ class DioUtil {
     return null;
   }
 
-  delete(String url, {Map<String, dynamic>? map, Options? options}) async {
+  delete(String url,
+      {Map<String, dynamic>? data,
+      Map<String, dynamic>? query,
+      Options? options}) async {
     try {
-      return await _dio.delete(url, data: map, options: options);
+      return await _dio.delete(url,
+          data: data, queryParameters: query, options: options);
     } on DioError catch (e) {
       formatError(e);
     }

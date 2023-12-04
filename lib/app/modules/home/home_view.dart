@@ -239,6 +239,9 @@ class _MHomePageState extends State<_MHomePage> {
                           return DayRecord(
                             colorBg: AppColors.whiteBg,
                             data: data[index - 1],
+                            onRefresh: () {
+                              setState(() {});
+                            },
                           );
                         }
                       },
@@ -839,6 +842,9 @@ class _SOnePageState extends State<_SOnePage> {
                             data: data[index],
                             colorBg: Colors.transparent,
                             isOld: true,
+                            onRefresh: () {
+                              setState(() {});
+                            },
                           );
                         }
                       },

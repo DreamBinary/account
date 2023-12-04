@@ -1,7 +1,9 @@
 import 'package:account/app/component/version_ctrl.dart';
+import 'package:account/app/data/database/db_consume.dart';
 import 'package:account/app/modules/all_entry/login/login_binding.dart';
 import 'package:account/app/theme/app_string.dart';
 import 'package:account/app/theme/app_text_theme.dart';
+import 'package:account/app/utils/db_util.dart';
 import 'package:account/app/utils/mmkv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -18,13 +20,20 @@ import 'app/routes/app_pages.dart';
 import 'app/theme/app_colors.dart';
 
 void main() async {
-  final rootDir = await MMKV.initialize();
+  await Future.wait([
+    MMKV.initialize(),
+    DBUtil.init(),
+  ]);
   // splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   StatusBarControl.setTranslucent(true);
-
   runApp(const MyApp());
+
+  DBConsume.getRangeRecordMap().then((value) {
+    print(value);
+  });
+
 }
 
 @pragma("vm:entry-point")
@@ -73,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                 AppTS.changeVersion(v);
                 AppColors.changeVersion(v);
                 setState(
-                      () {
+                  () {
                     version = v;
                   },
                 );
@@ -84,8 +93,8 @@ class _MyAppState extends State<MyApp> {
                   primaryColor: AppColors.primary,
                   fontFamily: "FZQKBYSJW",
                   colorScheme:
-                  ColorScheme.fromSwatch(primarySwatch: Colors.grey)
-                      .copyWith(background: AppColors.whiteBg),
+                      ColorScheme.fromSwatch(primarySwatch: Colors.grey)
+                          .copyWith(background: AppColors.whiteBg),
                 ),
                 navigatorObservers: [Statusbarz.instance.observer],
                 getPages: AppPages.pages,

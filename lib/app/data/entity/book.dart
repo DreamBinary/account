@@ -19,14 +19,16 @@ class Book {
       );
 
   // toJson
-  Map<String, dynamic> toJson() => {
-        'ledgerId': _ledgerId,
-        'userId': _userId,
-        'ledgerName': _ledgerName,
-        'coverMsg': _coverMsg,
-        'createTime': _createTime,
-        'updateTime': _updateTime,
-      };
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['ledgerId'] = _ledgerId;
+    map['userId'] = _userId;
+    map['ledgerName'] = _ledgerName;
+    map['coverMsg'] = _coverMsg;
+    map['createTime'] = _createTime;
+    map['updateTime'] = _updateTime;
+    return map;
+  }
 
   num _ledgerId;
   num _userId;

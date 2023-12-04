@@ -11,7 +11,7 @@ class TableAnalyseLogic extends GetxController {
     if (state.date == null) {
       state.date = date;
       List<Map<String, List<ConsumeData>>> record =
-          await ApiConsume.getRecordMap(date: "$date 00:00:00");
+          await ApiConsume.getRecordMap(date: "$date 00:00:00") ?? [];
 
       for (var element in record) {
         element.forEach((key, value) {

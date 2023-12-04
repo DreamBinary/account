@@ -8,8 +8,10 @@ class AddState {
   var nameCtrl = TextEditingController();
   var merchantCtrl = TextEditingController();
   var remarkCtrl = TextEditingController();
+  num bookId = 0;
   int typeId = 0;
   String? imgUrl;
+  num consumeId = 0;
 
   List<String> wordList = [];
 

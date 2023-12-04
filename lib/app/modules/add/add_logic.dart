@@ -17,6 +17,7 @@ class AddLogic extends GetxController {
     state.remarkCtrl.text = cData.description;
     state.typeId = cData.typeId;
     state.imgUrl = cData.imgUrl;
+    state.consumeId = cData.consumptionId;
   }
 
   void initWords(List<String> strL) {
@@ -30,7 +31,7 @@ class AddLogic extends GetxController {
       amount: -double.parse(state.moneyCtrl.text),
       typeId: state.typeId,
       store: state.merchantCtrl.text,
-      consumeTime: state.dateCtrl.text,
+      consumeTime: "00:00:00",
       consumeDate: state.dateCtrl.text,
       credential: state.imgUrl ?? "",
     );
@@ -38,7 +39,26 @@ class AddLogic extends GetxController {
     if (id == null) {
       return false;
     }
-    var res = await ApiBook.addBookRecord(124, id);
+    var res = await ApiBook.addBookRecord(state.bookId, id);
+    if (res) {
+      clear();
+    }
+    return res;
+  }
+
+  Future<bool> upEdit() async {
+    var cData = ConsumeData(
+      consumptionName: state.nameCtrl.text,
+      description: state.remarkCtrl.text,
+      amount: -double.parse(state.moneyCtrl.text),
+      typeId: state.typeId,
+      store: state.merchantCtrl.text,
+      consumeTime: "00:00:00",
+      consumeDate: state.dateCtrl.text,
+      credential: state.imgUrl ?? "",
+      consumptionId: state.consumeId,
+    );
+    var res = await ApiConsume.updateConsume(cData);
     if (res) {
       clear();
     }

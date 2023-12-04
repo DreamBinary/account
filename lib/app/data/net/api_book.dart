@@ -9,7 +9,7 @@ import 'dio.dart';
 import 'url.dart';
 
 class ApiBook {
-  static Future<List<Book>> getBook() async {
+  static Future<List<Book>?> getBook() async {
     String token = MMKVUtil.getString(AppString.mmToken);
     var response = await DioUtil()
         .get(Url.book, options: Options(headers: {"token": token}));
@@ -18,8 +18,9 @@ class ApiBook {
       response?.data["data"]["list"].forEach((v) {
         list.add(Book.fromJson(v));
       });
+      return list;
     }
-    return list;
+    return null;
   }
 
   static Future<bool> addBook(String bookName) async {
@@ -42,7 +43,7 @@ class ApiBook {
     String token = MMKVUtil.getString(AppString.mmToken);
     var response = await DioUtil().delete(
       Url.book,
-      map: book.toJson(),
+      data: book.toJson(),
       options: Options(
         headers: {"token": token},
         contentType: "application/json",
@@ -63,14 +64,10 @@ class ApiBook {
     List<ConsumeData> list = [];
     if (response?.data["code"] == 0) {
       response?.data["data"]["list"].forEach((v) {
-        print(v);
         var c = ConsumeData.fromJson(v);
         list.add(c);
-        print(list.length);
       });
     }
-    print("getBookRecord");
-    print(list);
     return list;
   }
 
@@ -80,11 +77,8 @@ class ApiBook {
     var response = await DioUtil().post(
       Url.bookRecord,
       query: {"ledgerId": ledgerId, "consumptionId": consumptionId},
-      options:
-          Options(headers: {"token": token}, contentType: "application/json"),
+      options: Options(headers: {"token": token}),
     );
-    print("addBookRecord");
-    print(response?.data);
     if (response?.data["code"] == 0) {
       return true;
     }
